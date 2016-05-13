@@ -7,16 +7,18 @@ $(document).ready(function(){
     var floor;
     var cubo;
     var geometry_cubo, material_cubo;
+    var controls;
 
 
     function init() {
         /*Posicion inicial de la camara*/
         //camera.position.y = 200;
         camera.position.z = 5;
-
         floor = createFloor();
         scene.add(floor);
-
+	controls = new THREE.OrbitControls( camera );
+	controls.addEventListener( 'change', render );
+	
         cubo = crearCubo();
         scene.add( cubo );
         render();
@@ -52,10 +54,47 @@ $(document).ready(function(){
 
     function render() {
 
-        requestAnimationFrame( render );
+      //  requestAnimationFrame( animate );
+        //floor.rotation.z = Date.now() / 1000;
         renderer.render( scene, camera );
     }
 
+/*MOVIMIENTO DEL MOUSE*/
+    var screenW = window.innerWidth;
+    var screenH = window.innerHeight;
+    var spdx = 0, spdy = 0; var mouseX = 0, mouseY = 0, mouseDown = false; /*MOUSE*/
+    document.addEventListener('mousemove', function(event) {
 
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+    }, false);
+    
+    document.body.addEventListener("mousedown", function(event) {
+        mouseDown = true;
+	console.log(mouseDown);
+	animate();
+    }, false);
+    document.body.addEventListener("mouseup", function(event) {
+        mouseDown = false;
+	console.log(mouseDown);
+    }, false);
+    function animate()
+    {
+	console.log("ENTRO EN ANIMAR");
+        spdy =  (screenH / 2 - mouseY) / 40;
+        spdx =  (screenW / 2 - mouseX) / 40;
+        if (mouseDown){
+            floor.rotation.x = spdy;
+            floor.rotation.y = spdx;
+        }
+    }
+    requestAnimationFrame(animate);
     init();
+    //animar();
+    animate();
 });
+
+
+/*usadffo http://jsfiddle.net/gfraQ/11/
+  http://stackoverflow.com/questions/8426822/rotate-camera-in-three-js-with-mouse
+*/
