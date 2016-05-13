@@ -38,9 +38,12 @@ $(document).ready(function(){
 
     /*creacion del plano*/
     function createFloor() {
-        var geometry = new THREE.PlaneGeometry( 5, 20, 32 );
+        var geometry = new THREE.PlaneGeometry( 500, 500, 8 , 8);
+        geometry.dynamic = true;
         var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
         var plane = new THREE.Mesh( geometry, material );
+        plane.receiveShadow = true;
+
         return plane;
     }
     /*creacion del cubo*/
@@ -71,7 +74,42 @@ $(document).ready(function(){
             plano.material = new THREE.MeshBasicMaterial( { color: hex } );
         } );
     }
+    /*carga de la posicion de la camara en los input.*/
+    function loadCameraPosition(){
+        var pisoX, pisoY, pisoZ;
+        pisoX = $("#pisoX");
+        pisoX.val(camera.position.x);
 
+        pisoY = $("#pisoY");
+        pisoY.val(camera.position.y);
+
+        pisoZ = $("#pisoZ");
+        pisoZ.val(camera.position.z);
+    }
+    function loadTableroAjedrez(){
+        var materiales = [];
+        // se tienen los 2 tipos de material a meter en cada cara del tablero.
+        materiales.push(new THREE.MeshBasicMaterial({color: 0xffffff, side:THREE.DoubleSide }));
+        materiales.push(new THREE.MeshBasicMaterial({color: 0x000000, side:THREE.DoubleSide }));
+
+        //      floor.material = materiales;
+        var longitud = floor.geometry.faces.length/2;
+        //console.log(longitud); // verificamos que hayan 64 caras
+
+        for(var i = 0; i < longitud; i++) {
+            if(i%2 !== 0){
+                floor.geometry.faces[i].materialIndex = 0;
+                floor.geometry.faces[i].material = materiales[0];
+            }else{
+                floor.geometry.faces[i].materialIndex = 1;
+                floor.geometry.faces[i].material = materiales[1];
+
+            }
+            //floor.geometry.material = materiales;
+
+        }
+
+    }
     /*MOVIMIENTO DEL MOUSE*/
     var screenW = window.innerWidth;
     var screenH = window.innerHeight;
@@ -80,6 +118,9 @@ $(document).ready(function(){
 
         mouseX = event.clientX;
         mouseY = event.clientY;
+
+        loadCameraPosition();
+        loadTableroAjedrez();
     }, false);
 
     document.body.addEventListener("mousedown", function(event) {
