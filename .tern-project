@@ -1,0 +1,13 @@
+{
+  "ecmaVersion": 5,
+  "libs": [
+    "browser",
+    "jquery",
+    "ecma5",
+    "underscore"
+  ],
+  "plugins": {
+    "node": {},
+    "node-express": {}
+  }
+}
