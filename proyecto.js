@@ -16,9 +16,9 @@ $(document).ready(function(){
         camera.position.z = 5;
         floor = createFloor();
         scene.add(floor);
-	controls = new THREE.OrbitControls( camera );
-	controls.addEventListener( 'change', render );
-	
+        controls = new THREE.OrbitControls( camera );
+        controls.addEventListener( 'change', render );
+
         cubo = crearCubo();
         scene.add( cubo );
         render();
@@ -54,12 +54,25 @@ $(document).ready(function(){
 
     function render() {
 
-      //  requestAnimationFrame( animate );
+        requestAnimationFrame( animate );
         //floor.rotation.z = Date.now() / 1000;
         renderer.render( scene, camera );
     }
 
-/*MOVIMIENTO DEL MOUSE*/
+
+    /*EVENTOS*/
+
+    function addEvents(plano){
+        $('#color_picker').on('input', function() {
+            console.log($(this).val());
+            //plano.material.setStyle($(this).val());
+            var color = new THREE.Color( $(this).val() );
+            var hex = color.getHex();
+            plano.material = new THREE.MeshBasicMaterial( { color: hex } );
+        } );
+    }
+
+    /*MOVIMIENTO DEL MOUSE*/
     var screenW = window.innerWidth;
     var screenH = window.innerHeight;
     var spdx = 0, spdy = 0; var mouseX = 0, mouseY = 0, mouseDown = false; /*MOUSE*/
@@ -68,19 +81,20 @@ $(document).ready(function(){
         mouseX = event.clientX;
         mouseY = event.clientY;
     }, false);
-    
+
     document.body.addEventListener("mousedown", function(event) {
         mouseDown = true;
-	console.log(mouseDown);
-	animate();
+        console.log(mouseDown);
+        animate();
     }, false);
     document.body.addEventListener("mouseup", function(event) {
         mouseDown = false;
-	console.log(mouseDown);
+        console.log(mouseDown);
     }, false);
+
     function animate()
     {
-	console.log("ENTRO EN ANIMAR");
+        console.log("ENTRO EN ANIMAR");
         spdy =  (screenH / 2 - mouseY) / 40;
         spdx =  (screenW / 2 - mouseX) / 40;
         if (mouseDown){
@@ -88,13 +102,14 @@ $(document).ready(function(){
             floor.rotation.y = spdx;
         }
     }
-    requestAnimationFrame(animate);
+
     init();
     //animar();
     animate();
+    addEvents(floor);
 });
 
 
-/*usadffo http://jsfiddle.net/gfraQ/11/
+/*usado http://jsfiddle.net/gfraQ/11/
   http://stackoverflow.com/questions/8426822/rotate-camera-in-three-js-with-mouse
 */
