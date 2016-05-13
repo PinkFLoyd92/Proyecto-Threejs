@@ -1,0 +1,14 @@
+{
+  "name": "ThreeJS Application",
+  "version": "1.0",
+  "main": "Three jS",
+  "author": "Andres Caceres",
+  "dependencies": {
+    "jquery": ">=1.5"
+  },
+  "ignore": [
+    "README.md",
+    "composer.json",
+    "package.json"
+  ]
+}
