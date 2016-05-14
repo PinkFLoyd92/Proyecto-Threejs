@@ -11,16 +11,15 @@ $(document).ready(function(){
 
 
     function init() {
-        /*Posicion inicial de la camara*/
-        //camera.position.y = 200;
-        camera.position.z = 5;
         floor = createFloor();
         scene.add(floor);
-        controls = new THREE.OrbitControls( camera );
+        controls = new THREE.OrbitControls( camera , renderer.domElement);
         controls.addEventListener( 'change', render );
 
         cubo = crearCubo();
         scene.add( cubo );
+        //camera.lookAt(cubo.position);
+        camera.lookAt(scene.position);
         render();
     }
 
@@ -30,12 +29,19 @@ $(document).ready(function(){
     // hay mas tipos de camaras, por el momento usamos esta.
     /*campo1: campo de vista, aspect ratio= casi siempre se usa esto mismo, near, far= objetos que tengan
       mayor distancia a la de este campo no apareceran.*/
-    camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1,1000);
+    camera = new THREE.PerspectiveCamera(45,window.innerWidth / window.innerHeight,1,10000);
+    camera.position.set( 0 , 200, 80 );
+
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor(0xccccff);
     document.body.appendChild( renderer.domElement );
 
-
+    /*Creacion de la luz*/
+    var light = new THREE.PointLight(0xffffff);
+    light.position.set(100, 250, 250);
+    scene.add(light);
+    
     /*creacion del plano*/
     function createFloor() {
         var geometry = new THREE.PlaneGeometry( 500, 500, 8 , 8);
@@ -48,13 +54,13 @@ $(document).ready(function(){
     }
     /*creacion del cubo*/
     function crearCubo(){
-        geometry_cubo = new THREE.BoxGeometry( 1, 1, 1 );
+        geometry_cubo = new THREE.BoxGeometry( 50, 50, 50 );
         material_cubo = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
         cubo = new THREE.Mesh( geometry_cubo, material_cubo );
         //cubo.position.z = floor.position.z;
-	cubo.position.z = 0.5;
-	console.log(cubo.position.z);
-	
+        cubo.position.z = 25;
+        //console.log(cubo.position.z);
+
         cubo.name= "cubo";
         return cubo;
     }
@@ -89,7 +95,33 @@ $(document).ready(function(){
             floor = loadTableroAjedrez();
             scene.add(floor);
         });
+        $(document).keydown(function(event) {
+            var delta = 5;
+            event = event || window.event;
+            var keycode = event.keyCode;
+            switch(keycode){
+            case 37 : //left arrow
+                camera.position.x = camera.position.x - delta;
+                $("#pisoX").val(camera.position.x);
+                break;
+            case 38 : // up arrow
+                camera.position.z = camera.position.z - delta;
+                $("#pisoZ").val(camera.position.z);
+                break;
+            case 39 : // right arrow
+                camera.position.x = camera.position.x + delta;
+                $("#pisoX").val(camera.position.x);
+                break;
+            case 40 : //down arrow
+                camera.position.z = camera.position.z + delta;
+                $("#pisoZ").val(camera.position.z);
+                break;
+            }
+
+        });
+
     }
+
     /*carga de la posicion de la camara en los input.*/
     function loadCameraPosition(){
         var pisoX, pisoY, pisoZ;
@@ -195,12 +227,15 @@ $(document).ready(function(){
 
     function animate()
     {
-        spdy =  (screenH / 2 - mouseY) / 40;
+	controls.update();
+	renderer.render(scene, camera);
+	requestAnimationFrame( animate );
+/*        spdy =  (screenH / 2 - mouseY) / 40;
         spdx =  (screenW / 2 - mouseX) / 40;
         if (mouseDown){
             //cubo.rotation.x = spdy;
             //camera.rotation.y = spdx;
-        }
+        }*/
     }
 
     init();
