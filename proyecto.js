@@ -19,7 +19,7 @@ $(document).ready(function(){
         cubo = crearCubo();
         scene.add( cubo );
         //camera.lookAt(cubo.position);
-        camera.lookAt(scene.position);
+        camera.lookAt(cubo.position);
         render();
     }
 
@@ -30,7 +30,7 @@ $(document).ready(function(){
     /*campo1: campo de vista, aspect ratio= casi siempre se usa esto mismo, near, far= objetos que tengan
       mayor distancia a la de este campo no apareceran.*/
     camera = new THREE.PerspectiveCamera(45,window.innerWidth / window.innerHeight,1,10000);
-    camera.position.set( 0 , 200, 80 );
+    camera.position.set( 1.0336990502259968 ,-213.00064651767127, 32.088254071036296);
 
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
