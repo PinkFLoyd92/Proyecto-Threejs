@@ -26,7 +26,7 @@ $(document).ready(function(){
         floor = createFloor();
         scene.add(floor);
         controls = new THREE.OrbitControls( camera , renderer.domElement);
-        controls.addEventListener( 'change', render );
+        //controls.addEventListener( 'change', render );
 
         cubo = crearCubo(material_colorPrincipal);
         scene.add( cubo );
@@ -192,7 +192,7 @@ $(document).ready(function(){
         cubo.rotation.z = Date.now() / 1000;
         piramide.rotation.y= Date.now() / 1000;
         esfera.rotation.z= Date.now() / 1000;
-        torus.rotation.z= Date.now() / 1000;
+        torus.rotation.y= Date.now() / 1000;
         renderer.render( scene, camera );
     }
 
@@ -274,8 +274,8 @@ $(document).ready(function(){
         // Materials
         var cbmaterials = [];
 
-        cbmaterials.push( new THREE.MeshBasicMaterial( { color: 0xffffff, side: THREE.DoubleSide }) );
-        cbmaterials.push( new THREE.MeshBasicMaterial( { color: 0x000000, side: THREE.DoubleSide }) );
+        cbmaterials.push( new THREE.MeshPhongMaterial( { color: 0xffffff, side: THREE.DoubleSide }) );
+        cbmaterials.push( new THREE.MeshPhongMaterial( { color: 0x000000, side: THREE.DoubleSide }) );
 
         var l = cbgeometry.faces.length / 2; // <-- Right here. This should still be 8x8 (64)
 
@@ -289,6 +289,7 @@ $(document).ready(function(){
 
         // Mesh
         var cb = new THREE.Mesh( cbgeometry, new THREE.MeshFaceMaterial( cbmaterials ) );
+	cb.receiveShadow = true;
         cb.name = "floor";
         return cb;
 
