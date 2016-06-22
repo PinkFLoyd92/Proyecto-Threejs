@@ -41,7 +41,7 @@ $(document).ready(function(){
     var offset = new THREE.Vector3(),
         intersection = new THREE.Vector3(),
         INTERSECTED, SELECTED;
-
+    var grafico_seleccionado;
     function init() {
         mouseVector = new THREE.Vector2();
         raycaster = new THREE.Raycaster();
@@ -84,7 +84,7 @@ $(document).ready(function(){
 
     // hay mas tipos de camaras, por el momento usamos esta.
     /*campo1: campo de vista, aspect ratio= casi siempre se usa esto mismo, near, far= objetos que tengan
-      mayor distancia a la de este campo no apareceran.*/
+       mayor distancia a la de este campo no apareceran.*/
     camera = new THREE.PerspectiveCamera(45,window.innerWidth / window.innerHeight,1,10000);
     camera.position.set( 1.0336990502259968 ,-213.00064651767127, 1202.088254071036296);
 
@@ -93,7 +93,7 @@ $(document).ready(function(){
     renderer.setClearColor(0xccccff);
     document.body.appendChild( renderer.domElement );
 
-  
+
     function addLights() {
         spotLight = new THREE.SpotLight( 0xffffff );
         spotLight.position.set( 300, 100, 100 );
@@ -122,8 +122,8 @@ $(document).ready(function(){
     /*creacion de la piramide*/
     function crearPiramide($material_color) {
         /*parametro 1: radio superior del cilindro, siendo 0 queda la punta y se anula 1 cara.
-          parametro 2: radio de la parte de abajo, parametro 3: altura, parametro 4: numero de segmentos,
-        */
+           parametro 2: radio de la parte de abajo, parametro 3: altura, parametro 4: numero de segmentos,
+         */
         var pyramidGeometry = new THREE.CylinderGeometry(0, 100,200, 4, false);
         for(var i = 0; i < pyramidGeometry.faces.length; i++){
             if(pyramidGeometry.faces[i] instanceof THREE.Face4){
@@ -213,7 +213,7 @@ $(document).ready(function(){
 
             intersects[ i ].object.material.color.set( 0xff0000 );
         }
-      
+
 
         /*Rotaciones de objetos*/
         cubo.rotation.z += velocity_cube_rotation / 300;
@@ -222,21 +222,21 @@ $(document).ready(function(){
         torus.rotation.y += velocity_torus_rotation / 300;
         renderer.render( scene, camera );
     }
-      function tick() {
+    function tick() {
         running=1;
         id=requestAnimationFrame(tick);
         var timeNow = new Date().getTime();
         if (lastTime != 0) {
             var elapsed = timeNow - lastTime;
 
-           
+
             torusAngle += 0.0006 * elapsed;
         }
-        
+
         lastTime = timeNow;
         torus.rotateX(torusAngle);
-       
-       
+
+
     }
 
     /*EVENTOS*/
@@ -255,7 +255,7 @@ $(document).ready(function(){
 
                 SELECTED = intersects[ 0 ].object;
 
-               if ( raycaster.ray.intersectPlane( plane, intersection ) ) {
+                if ( raycaster.ray.intersectPlane( plane, intersection ) ) {
 
                     offset.copy( intersection ).sub( SELECTED.position );
 
@@ -275,8 +275,8 @@ $(document).ready(function(){
                 SELECTED = null;
 
             }else {
-		controls.enabled = true;
-	    }
+                controls.enabled = true;
+            }
 
             container.css('cursor','auto');
         });
@@ -295,7 +295,7 @@ $(document).ready(function(){
                     SELECTED.position.copy( intersection.sub( offset ) );
 
 
-                    }
+                }
 
                 return;
 
@@ -313,8 +313,8 @@ $(document).ready(function(){
                     INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
 
                     plane.setFromNormalAndCoplanarPoint(
-                      camera.getWorldDirection( plane.normal ),
-                      INTERSECTED.position );
+                        camera.getWorldDirection( plane.normal ),
+                        INTERSECTED.position );
 
                 }
 
@@ -442,108 +442,108 @@ $(document).ready(function(){
             event = event || window.event;
             var keycode = event.keyCode;
             switch(keycode){
-            case 68 : //a
-                if(move_pyramid==1){
-                    piramide.position.x = piramide.position.x+10;
-                }
-                else  if(move_cube==1){
-                    cubo.position.x = cubo.position.x+10;
-                }
-                else  if(move_sphere==1){
-                    esfera.position.x = esfera.position.x+10;
-                }
-                else  if(move_torus==1){
-                    torus.position.x = torus.position.x+10;
-                }
+                case 68 : //a
+                    if(move_pyramid==1){
+                        piramide.position.x = piramide.position.x+10;
+                    }
+                    else  if(move_cube==1){
+                        cubo.position.x = cubo.position.x+10;
+                    }
+                    else  if(move_sphere==1){
+                        esfera.position.x = esfera.position.x+10;
+                    }
+                    else  if(move_torus==1){
+                        torus.position.x = torus.position.x+10;
+                    }
 
-                break;
-            case 65 : //d
-                if(move_pyramid==1){
-                    piramide.position.x = piramide.position.x-10;
-                }
-                else  if(move_cube==1){
-                    cubo.position.x = cubo.position.x-10;
-                }
-                else  if(move_sphere==1){
-                    esfera.position.x = esfera.position.x-10;
-                }
-                else  if(move_torus==1){
-                    torus.position.x = torus.position.x-10;
-                }
+                    break;
+                case 65 : //d
+                    if(move_pyramid==1){
+                        piramide.position.x = piramide.position.x-10;
+                    }
+                    else  if(move_cube==1){
+                        cubo.position.x = cubo.position.x-10;
+                    }
+                    else  if(move_sphere==1){
+                        esfera.position.x = esfera.position.x-10;
+                    }
+                    else  if(move_torus==1){
+                        torus.position.x = torus.position.x-10;
+                    }
 
-                break;
-            case 87 : //w
-                if(move_pyramid==1){
-                    piramide.position.z = piramide.position.z+10;
-                }
-                else  if(move_cube==1){
-                    cubo.position.z = cubo.position.z+10;
-                }
-                else  if(move_sphere==1){
-                    esfera.position.z = esfera.position.z+10;
-                }
-                else  if(move_torus==1){
-                    torus.position.z = torus.position.z+10;
-                }
-                break;
-            case 83 : //s
-                if(move_pyramid==1){
-                    piramide.position.z = piramide.position.z-10;
-                }
-                else  if(move_cube==1){
-                    cubo.position.z = cubo.position.z-10;
-                }
-                else  if(move_sphere==1){
-                    esfera.position.z = esfera.position.z-10;
-                }
-                else  if(move_torus==1){
-                    torus.position.z = torus.position.z-10;
-                }
-                break;
-            case 90 : //z
-                if(move_pyramid==1){
-                    piramide.position.y = piramide.position.y+10;
-                }
-                else  if(move_cube==1){
-                    cubo.position.y = cubo.position.y+10;
-                }
-                else  if(move_sphere==1){
-                    esfera.position.y = esfera.position.y+10;
-                }
-                else  if(move_torus==1){
-                    torus.position.y = torus.position.y+10;
-                }
-                break;
-            case 88 : //x
-                if(move_pyramid==1){
-                    piramide.position.y = piramide.position.y-10;
-                }
-                else  if(move_cube==1){
-                    cubo.position.y = cubo.position.y-10;
-                }
-                else  if(move_sphere==1){
-                    esfera.position.y = esfera.position.y-10;
-                }
-                else  if(move_torus==1){
-                    torus.position.y = torus.position.y-10;
-                }
-                break;
-            case 37 : //left arrow
-                camera.position.x = camera.position.x - delta;
-                $("#pisoX").val(camera.position.x);
-                break;
-            case 38 : // up arrow
-                camera.position.z = camera.position.z - delta;
-                $("#pisoZ").val(camera.position.z);
-                break;
-            case 39 : // right arrow
-                camera.position.x = camera.position.x + delta;
-                $("#pisoX").val(camera.position.x);
-                break;
-            case 40 : //down arrow
-                camera.position.z = camera.position.z + delta;
-                $("#pisoZ").val(camera.position.z);
-                break;
+                    break;
+                case 87 : //w
+                    if(move_pyramid==1){
+                        piramide.position.z = piramide.position.z+10;
+                    }
+                    else  if(move_cube==1){
+                        cubo.position.z = cubo.position.z+10;
+                    }
+                    else  if(move_sphere==1){
+                        esfera.position.z = esfera.position.z+10;
+                    }
+                    else  if(move_torus==1){
+                        torus.position.z = torus.position.z+10;
+                    }
+                    break;
+                case 83 : //s
+                    if(move_pyramid==1){
+                        piramide.position.z = piramide.position.z-10;
+                    }
+                    else  if(move_cube==1){
+                        cubo.position.z = cubo.position.z-10;
+                    }
+                    else  if(move_sphere==1){
+                        esfera.position.z = esfera.position.z-10;
+                    }
+                    else  if(move_torus==1){
+                        torus.position.z = torus.position.z-10;
+                    }
+                    break;
+                case 90 : //z
+                    if(move_pyramid==1){
+                        piramide.position.y = piramide.position.y+10;
+                    }
+                    else  if(move_cube==1){
+                        cubo.position.y = cubo.position.y+10;
+                    }
+                    else  if(move_sphere==1){
+                        esfera.position.y = esfera.position.y+10;
+                    }
+                    else  if(move_torus==1){
+                        torus.position.y = torus.position.y+10;
+                    }
+                    break;
+                case 88 : //x
+                    if(move_pyramid==1){
+                        piramide.position.y = piramide.position.y-10;
+                    }
+                    else  if(move_cube==1){
+                        cubo.position.y = cubo.position.y-10;
+                    }
+                    else  if(move_sphere==1){
+                        esfera.position.y = esfera.position.y-10;
+                    }
+                    else  if(move_torus==1){
+                        torus.position.y = torus.position.y-10;
+                    }
+                    break;
+                case 37 : //left arrow
+                    camera.position.x = camera.position.x - delta;
+                    $("#pisoX").val(camera.position.x);
+                    break;
+                case 38 : // up arrow
+                    camera.position.z = camera.position.z - delta;
+                    $("#pisoZ").val(camera.position.z);
+                    break;
+                case 39 : // right arrow
+                    camera.position.x = camera.position.x + delta;
+                    $("#pisoX").val(camera.position.x);
+                    break;
+                case 40 : //down arrow
+                    camera.position.z = camera.position.z + delta;
+                    $("#pisoZ").val(camera.position.z);
+                    break;
             }
 
         });
@@ -553,114 +553,127 @@ $(document).ready(function(){
             var color = new THREE.Color( $(this).val() );
             var hex = color.getHex();
             switch(figura){
-            case "CUBO":{
+                case "CUBO":{
 
-                var material_color = new THREE.MeshPhongMaterial( { color: color, specular: 0x555555, shininess: 30 } );
-                cubo.material = material_color;
-                console.log("cubo");
+                    var material_color = new THREE.MeshPhongMaterial( { color: color, specular: 0x555555, shininess: 30 } );
+                    cubo.material = material_color;
+                    console.log("cubo");
 
-                break;
-            }
-            case "TOROIDE":{
-                var material_color = new THREE.MeshPhongMaterial( { color: color, specular: 0x555555, shininess: 30 } );
-                torus.material = material_color;
-                console.log("toroide");
-                break;
-            }
-            case "PIRAMIDE":{
-                var material_color = new THREE.MeshPhongMaterial( { color: color, specular: 0x555555, shininess: 30 } );
-                piramide.material = material_color;
-                console.log("piramide");
-                break;
-            }
-            case "ESFERA":{
-                var material_color = new THREE.MeshPhongMaterial( { color: color, specular: 0x555555, shininess: 30 } );
-                esfera.material = material_color;
-                console.log("esfera");
-                break;
-            }
-            default:
-                break;
+                    break;
+                }
+                case "TOROIDE":{
+                    var material_color = new THREE.MeshPhongMaterial( { color: color, specular: 0x555555, shininess: 30 } );
+                    torus.material = material_color;
+                    console.log("toroide");
+                    break;
+                }
+                case "PIRAMIDE":{
+                    var material_color = new THREE.MeshPhongMaterial( { color: color, specular: 0x555555, shininess: 30 } );
+                    piramide.material = material_color;
+                    console.log("piramide");
+                    break;
+                }
+                case "ESFERA":{
+                    var material_color = new THREE.MeshPhongMaterial( { color: color, specular: 0x555555, shininess: 30 } );
+                    esfera.material = material_color;
+                    console.log("esfera");
+                    break;
+                }
+                default:
+                    break;
             }
         });
         // Trigger action when the contexmenu is about to be shown
-       $(document).bind("contextmenu", function (event) {
-           //// Avoid the real one
-           event.preventDefault();
-           $(".custom-menu").finish().toggle(100).
-                   css({
-                       top: event.pageY + "px",
-               left: event.pageX + "px"
-           });
-       });
-       $(document).bind("mousedown", function (e) {
-           if (!$(e.target).parents(".custom-menu").length > 0) {
-               $(".custom-menu").hide(100);
-           }
-       });
+        $(document).bind("contextmenu", function (event) {
+            if(event.target.nodeName === "DIV"){
+		return;
+            }
+            //console.log("se abre el context menu");
+            else if(event.target.nodeName === "CANVAS"){
+		var intersects = raycaster.intersectObjects( objects );
+		if ( intersects.length > 0 ){
+		    //console.log(intersects[0].object);
+		    grafico_seleccionado = intersects[0].object;
+		}else{
+		    return;
+		}
+		  
+		event.preventDefault();
+                $(".custom-menu").finish().toggle(100).
+                                  css({
+                                      top: event.pageY + "px",
+                                      left: event.pageX + "px"
+                                  });
+            }});
+
+        $(document).bind("mousedown", function (e) {
+            if (!$(e.target).parents(".custom-menu").length > 0) {
+                $(".custom-menu").hide(100);
+            }
+        });
 
 
-       // If the menu element is clicked
-    $(".custom-menu li").click(function(){
-    
-    // This is the triggered action name
-    switch($(this).attr("data-action")) {
-        
-        // A case for each action. Your actions here
-        case "textura_1": var loader = new THREE.TextureLoader();
-                loader.load('images/grass.gif',
-                        function ( texture ) {
-                                // do something with the texture
-                                var material_texture = new THREE.MeshBasicMaterial( {
+        // If the menu element is clicked
+        $(".custom-menu li").click(function(){
+
+            // This is the triggered action name
+            switch($(this).attr("data-action")) {
+
+                    // A case for each action. Your actions here
+                case "textura_1": var loader = new THREE.TextureLoader();
+                    loader.load('images/grass.gif',
+                                function ( texture ) {
+                                    // do something with the texture
+                                    var material_texture = new THREE.MeshBasicMaterial( {
                                         map: texture
-                                 } );
-                                 piramide.material = material_texture; 
-                                 
-                        }
-                ); 
-        break;
-        case "textura_2": 
-        var loader = new THREE.TextureLoader();
-                loader.load('images/moon.gif',
-                        function ( texture ) {
-                                // do something with the texture
-                                var material_texture = new THREE.MeshBasicMaterial( {
+                                    } );
+                                    grafico_seleccionado.material = material_texture;
+
+                                }
+                    );
+                    break;
+                case "textura_2":
+                    var loader = new THREE.TextureLoader();
+                    loader.load('images/moon.gif',
+                                function ( texture ) {
+                                    // do something with the texture
+                                    var material_texture = new THREE.MeshBasicMaterial( {
                                         map: texture
-                                 } );
-                                 piramide.material = material_texture; 
-                                 
-                        }
-                ); 
-        break;
-        case "textura_3": 
-        var loader = new THREE.TextureLoader();
-                loader.load('images/crate.gif',
-                        function ( texture ) {
-                                // do something with the texture
-                                var material_texture = new THREE.MeshBasicMaterial( {
+                                    } );
+                                 grafico_seleccionado.material = material_texture;
+
+                                }
+                    );
+                    break;
+                case "textura_3":
+                    var loader = new THREE.TextureLoader();
+                    loader.load('images/crate.gif',
+                                function ( texture ) {
+                                    // do something with the texture
+                                    var material_texture = new THREE.MeshBasicMaterial( {
                                         map: texture
-                                 } );
-                                 piramide.material = material_texture; 
-                                 
-                        }
-                );     
-        break;
-        case "textura_4": 
-                var loader = new THREE.TextureLoader();
-                loader.load('images/bricks.gif',
-                        function ( texture ) {
-                                // do something with the texture
-                                var material_texture = new THREE.MeshBasicMaterial( {
+                                    } );
+                                    grafico_seleccionado.material = material_texture;
+
+                                }
+                    );
+                    break;
+                case "textura_4":
+                    var loader = new THREE.TextureLoader();
+                    loader.load('images/bricks.gif',
+                                function ( texture ) {
+                                    // do something with the texture
+                                    var material_texture = new THREE.MeshBasicMaterial( {
                                         map: texture
-                                 } );
-                                 piramide.material = material_texture; 
-                                 
-                        }
-                );   
-        break;
-    }
-        $(".custom-menu").hide(100);
-    });
+                                    } );
+                                    grafico_seleccionado.material = material_texture;
+
+                                }
+                    );
+                    break;
+            }
+            $(".custom-menu").hide(100);
+        });
 
 
     }
@@ -687,7 +700,7 @@ $(document).ready(function(){
         }
         animate();
     }
-       
+
 
     /*http://stackoverflow.com/questions/22689898/three-js-checkerboard-plane*/
     // funcion tomada de este tema en stackoverflow.
@@ -717,10 +730,10 @@ $(document).ready(function(){
         cb.name = "floor";
         return cb;
 
-      
+
         mesh.receiveShadow = true;
         return mesh;
-      
+
     }
 
     /*MOVIMIENTO DEL MOUSE*/
@@ -748,7 +761,7 @@ $(document).ready(function(){
         controls.update();
         render();
         requestAnimationFrame( animate );
-      
+
     }
 
     init();
@@ -760,5 +773,5 @@ $(document).ready(function(){
 
 
 /*usado http://jsfiddle.net/gfraQ/11/
-  http://stackoverflow.com/questions/8426822/rotate-camera-in-three-js-with-mouse
-*/
+   http://stackoverflow.com/questions/8426822/rotate-camera-in-three-js-with-mouse
+ */
