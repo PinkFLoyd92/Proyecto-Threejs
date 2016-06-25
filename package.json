@@ -1,0 +1,24 @@
+{
+  "name": "threejs",
+  "version": "1.0.0",
+  "description": "PROYECTO DE GRAFICOS I",
+  "main": "proyecto.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PinkFLoyd92/Proyecto-Threejs.git"
+  },
+  "keywords": [
+    "graficos",
+    "threejs",
+    "webgl"
+  ],
+  "author": "Andres Caceres",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PinkFLoyd92/Proyecto-Threejs/issues"
+  },
+  "homepage": "https://github.com/PinkFLoyd92/Proyecto-Threejs#readme"
+}
