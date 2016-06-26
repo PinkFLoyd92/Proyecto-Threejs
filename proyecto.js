@@ -43,7 +43,12 @@ $(document).ready(function() {
         intersection = new THREE.Vector3(),
         INTERSECTED, SELECTED;
     var grafico_seleccionado = null;
+    var pivot1 = new THREE.Object3D();
+    var pivot2 = new THREE.Object3D();
+    var pivot3 = new THREE.Object3D();
+    var pivot4 = new THREE.Object3D();
 
+    var array_figures;
     function init() {
         mouseVector = new THREE.Vector2();
         raycaster = new THREE.Raycaster();
@@ -264,31 +269,31 @@ $(document).ready(function() {
     animar.onChange(function(value) {
         toggle.animate = toggle.animate ? true : false;
         console.log(toggle.animate);
+	parent = new THREE.Object3D();
+        scene.add(parent);
+        // pivots
+        pivot1 = new THREE.Object3D();
+        pivot2 = new THREE.Object3D();
+        pivot3 = new THREE.Object3D();
+        pivot4 = new THREE.Object3D();
+        pivot1.rotation.z = 0;
+        pivot2.rotation.z = 2 * Math.PI / 3;
+        pivot3.rotation.z = 4 * Math.PI / 3;
+        pivot4.rotation.z = 6 * Math.PI / 3;
+        parent.add(pivot1);
+        parent.add(pivot2);
+        parent.add(pivot3);
+        parent.add(pivot4);
+        cubo.position.y = 5;
+        torus.position.y = 5;
+        esfera.position.y = 5;
+        pivot1.add(cubo);
+        pivot2.add(torus);
+        pivot3.add(esfera);
+        pivot4.add(piramide);
         if (toggle.animate) {
             running = 1;
             // tomado de http://stackoverflow.com/questions/15214582/how-do-i-rotate-some-moons-around-a-planet-with-three-js
-            parent = new THREE.Object3D();
-            scene.add(parent);
-            // pivots
-            var pivot1 = new THREE.Object3D();
-            var pivot2 = new THREE.Object3D();
-            var pivot3 = new THREE.Object3D();
-            var pivot4 = new THREE.Object3D();
-            pivot1.rotation.z = 0;
-            pivot2.rotation.z = 2 * Math.PI / 3;
-            pivot3.rotation.z = 4 * Math.PI / 3;
-            pivot4.rotation.z = 6 * Math.PI / 3;
-            parent.add(pivot1);
-            parent.add(pivot2);
-            parent.add(pivot3);
-            parent.add(pivot4);
-            cubo.position.y = 5;
-            torus.position.y = 5;
-            esfera.position.y = 5;
-            pivot1.add(cubo);
-            pivot2.add(torus);
-            pivot3.add(esfera);
-            pivot4.add(piramide);
         } else {
             running = 0;
             cancelAnimationFrame(animate);
@@ -308,9 +313,15 @@ $(document).ready(function() {
     var color;
     var hex;
     var material_color;
-
+    /* function backup_figures() {
+       var array_figures = [];
+       array_figures.push(esfera.clone());
+       array_figures.push(piramide.clone());
+       array_figures.push(torus.clone());
+       array_figures.push(cubo.clone());
+       return array_figures;
+     * }*/
     function render() {
-        //lightHelper.update();
         raycaster.setFromCamera(mouseVector, camera);
         // calculate objects intersecting the picking ray
         var intersects = raycaster.intersectObjects(objects);
@@ -392,7 +403,7 @@ $(document).ready(function() {
                 if (raycaster.ray.intersectPlane(plane, intersection)) {
 
                     SELECTED.position.copy(intersection.sub(offset));
-
+		    //console.log(SELECTED);
 
                 }
 
@@ -723,8 +734,13 @@ $(document).ready(function() {
         controls.update();
         render();
         requestAnimationFrame(animate);
-        if (running == 1)
+        if (running == 1){
             parent.rotation.z += 0.01;
+	    for(var i = 0; i < parent.children.length; i++) {
+		//console.log(parent.children[i]);
+	    }	    
+	    /* 	    console.log(cubo.position);*/
+	    }
     }
 
     init();
