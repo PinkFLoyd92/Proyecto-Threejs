@@ -209,22 +209,19 @@ $(document).ready(function() {
     $("#GL").append(renderer.domElement);
 
     var controlsFigure = new function() {
-        // this.sphereRotationSpeed = 0.02;
-        // this.cubeRotationSpeed = 0.02;//controlador de la velocidad de rotacion del cubo
-        // this.pyramidRotationSpeed=0.02;//controlador de la velocidad de rotacion del piramide
-        this.figureRotationSpeed = 0.02; //controlador de la velocidad de rotacion del toroide
+        this.figureRotationSpeed = 0.02; //controlador de la velocidad de la figura seleccionada
     }
 
-    var colorsFigure = new function() {
-        this.colorFigura = "#ffae23" // RGB array
-    }
+    // var colorsFigure = new function() {
+    //     this.colorFigura = "#ffae23" // RGB array
+    // }
 
 
     var gui = new dat.GUI();
     //se añaden los controles
 
     gui.add(controlsFigure, 'figureRotationSpeed', 0, 0.5);
-    gui.addColor(colorsFigure, 'colorFigura');
+    //gui.addColor(colorsFigure, 'colorFigura');
 
     var toggle = this;
     toggle.luces = true;
@@ -235,12 +232,9 @@ $(document).ready(function() {
     tablero.ajedrez = false;
     tablero.colorPiso = "#ffff00"
     var pisoColoreado = gui.addColor(tablero, 'colorPiso');
-    // view.Axis_Y=false;//rotacion en el eje y: se inicializa el checkbutton en desmarcado
-    // view.Axis_Z=false;//rotacion en el eje z: se inicializa el checkbutton en desmarcado
     //manejadores de eventos
     var cambioAjedrez = gui.add(tablero, 'ajedrez').listen();
-    // var cb2=gui.add(view,'Axis_Y').listen();
-    // var cb3=gui.add(view,'Axis_Z').listen();
+
     var foco = gui.add(toggle, 'luces');
     var sombra = gui.add(toggle, 'sombras');
     var animar = gui.add(toggle, 'animate');
@@ -321,10 +315,10 @@ $(document).ready(function() {
         // calculate objects intersecting the picking ray
         var intersects = raycaster.intersectObjects(objects);
 
-        // for (var i = 0; i < intersects.length; i++) {
-        //
-        //     intersects[i].object.material.color.set(0xFFFFCC);
-        // }
+        for (var i = 0; i < intersects.length; i++) {
+
+            intersects[i].object.material.color.set(0xFFFFCC);
+        }
 
 
         /*Rotaciones de objetos*/
@@ -332,14 +326,14 @@ $(document).ready(function() {
         // piramide.rotation.y += controlsFigure.pyramidRotationSpeed;//velocity_pyramid_rotation / 300;
         // esfera.rotation.z += controlsFigure.sphereRotationSpeed;//velocity_sphere_rotation / 300;
         grafico_seleccionado.rotation.y += controlsFigure.figureRotationSpeed; //velocity_torus_rotation / 300
-        color = new THREE.Color(colorsFigure.colorFigura);
-        material_color = new THREE.MeshPhongMaterial({
-            color: color,
-            specular: 0x555555,
-            shininess: 30
-        });
-        // console.log(grafico_seleccionado);
-        grafico_seleccionado.material = material_color;
+        // color = new THREE.Color(colorsFigure.colorFigura);
+        // material_color = new THREE.MeshPhongMaterial({
+        //     color: color,
+        //     specular: 0x555555,
+        //     shininess: 30
+        // });
+        // // console.log(grafico_seleccionado);
+        // grafico_seleccionado.material = material_color;
         renderer.render(scene, camera);
     }
 
@@ -578,6 +572,7 @@ $(document).ready(function() {
                     var loader = new THREE.TextureLoader();
                     loader.load('images/grass.gif',
                         function(texture) {
+                            console.log(texture);
                             // do something with the texture
                             var material_texture = new THREE.MeshBasicMaterial({
                                 map: texture
