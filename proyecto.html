@@ -1,266 +1,215 @@
 <!DOCTYPE html>
 <html>
- <head>
-  <meta charset=utf-8>
-  <title>Proyecto</title>
-  <style>
-   body { margin: 0; }
-   canvas { width: 100%; height: 100% }
-   /* Main */
-#menu {
-    width: 100%;
-    margin: 0;
-    padding: 10px 0 0 0;
-    list-style: none;  
-    background-color: #111;
-    background-image: linear-gradient(#444, #111);
-    border-radius: 50px;
-    box-shadow: 0 2px 1px #9c9c9c;
-}
-div.velocidad {
-    position: absolute;
-    border: 3px solid #73AD21;
-}
-#menu li {
-    float: left;
-    padding: 0 0 10px 0;
-    position: relative;
-}
 
-#menu a {
-    float: left;
-    height: 25px;
-    padding: 0 25px;
-    color: #999;
-    text-transform: uppercase;
-    font: bold 12px/25px Arial, Helvetica;
-    text-decoration: none;
-    text-shadow: 0 1px 0 #000;
-}
+<head>
+    <meta charset=utf-8>
+    <title>Proyecto</title>
+    <style>
+        body {
+            margin: 0;
+        }
 
-#menu li:hover > a {
-    color: #fafafa;
-}
+        canvas {
+            width: 100%;
+            height: 100%
+        }
+        /* Main */
 
-*html #menu li a:hover { /* IE6 */
-    color: #fafafa;
-}
+        #menu {
+            width: 100%;
+            margin: 0;
+            padding: 10px 0 0 0;
+            list-style: none;
+            background-color: #111;
+            background-image: linear-gradient(#444, #111);
+            border-radius: 50px;
+            box-shadow: 0 2px 1px #9c9c9c;
+        }
 
-#menu li:hover > ul {
-    display: block;
-}
+        div.velocidad {
+            position: static;
+            border: 3px solid #73AD21;
+        }
 
-/* Sub-menu */
-#menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;    
-    display: none;
-    position: absolute;
-    top: 35px;
-    left: 0;
-    z-index: 99999;    
-    background-color: #444;   
-    background-image: linear-gradient(#444, #111);    
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
+        #menu li {
+            float: left;
+            padding: 0 0 10px 0;
+            position: relative;
+        }
 
-#menu ul li {
-    float: none;
-    margin: 0;
-    padding: 0;
-    display: block;  
-    box-shadow: 0 1px 0 #111111, 
-                0 2px 0 #777777;
-}
+        #menu a {
+            float: left;
+            height: 25px;
+            padding: 0 25px;
+            color: #999;
+            text-transform: uppercase;
+            font: bold 12px/25px Arial, Helvetica;
+            text-decoration: none;
+            text-shadow: 0 1px 0 #000;
+        }
 
-#menu ul li:last-child { 
-    box-shadow: none;    
-}
+        #menu li:hover> a {
+            color: #fafafa;
+        }
 
-#menu ul a {    
-    padding: 10px;
-    height: auto;
-    line-height: 1;
-    display: block;
-    white-space: nowrap;
-    float: none;
-    text-transform: none;
-}
+        *html #menu li a:hover {
+            /* IE6 */
+            color: #fafafa;
+        }
 
-*html #menu ul a { /* IE6 */   
-    height: 10px;
-    width: 150px;
-}
+        #menu li:hover> ul {
+            display: block;
+        }
+        /* Sub-menu */
 
-*:first-child+html #menu ul a { /* IE7 */    
-    height: 10px;
-    width: 150px;
-}
+        #menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: none;
+            position: absolute;
+            top: 35px;
+            left: 0;
+            z-index: 99999;
+            background-color: #444;
+            background-image: linear-gradient(#444, #111);
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
 
-#menu ul a:hover {
-    background-color: #0186ba;
-    background-image: linear-gradient(#04acec, #0186ba);
-}
+        #menu ul li {
+            float: none;
+            margin: 0;
+            padding: 0;
+            display: block;
+            box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+        }
 
-#menu ul li:first-child a {
-    border-radius: 5px 5px 0 0;
-}
+        #menu ul li:last-child {
+            box-shadow: none;
+        }
 
-#menu ul li:first-child a:after {
-    content: '';
-    position: absolute;
-    left: 30px;
-    top: -8px;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 8px solid #444;
-}
+        #menu ul a {
+            padding: 10px;
+            height: auto;
+            line-height: 1;
+            display: block;
+            white-space: nowrap;
+            float: none;
+            text-transform: none;
+        }
 
-#menu ul li:first-child a:hover:after {
-    border-bottom-color: #04acec; 
-}
+        *html #menu ul a {
+            /* IE6 */
+            height: 10px;
+            width: 150px;
+        }
 
-#menu ul li:last-child a {
-    border-radius: 0 0 5px 5px;
-}
+        *:first-child+html #menu ul a {
+            /* IE7 */
+            height: 10px;
+            width: 150px;
+        }
 
-/* Clear floated elements */
-#menu:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-}
+        #menu ul a:hover {
+            background-color: #0186ba;
+            background-image: linear-gradient(#04acec, #0186ba);
+        }
 
-* html #menu             { zoom: 1; } /* IE6 */
-*:first-child+html #menu { zoom: 1; } /* IE7 */
+        #menu ul li:first-child a {
+            border-radius: 5px 5px 0 0;
+        }
 
-.custom-menu {
-    display: none;
-    z-index: 1000;
-    position: absolute;
-    overflow: hidden;
-    border: 1px solid #CCC;
-    white-space: nowrap;
-    font-family: sans-serif;
-    background: #FFF;
-    color: #333;
-    border-radius: 5px;
-    padding: 0;
-}
+        #menu ul li:first-child a:after {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: -8px;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 8px solid #444;
+        }
 
-/* Each of the items in the list */
-.custom-menu li {
-    padding: 8px 12px;
-    cursor: pointer;
-    list-style-type: none;
-    transition: all .3s ease;
-}
+        #menu ul li:first-child a:hover:after {
+            border-bottom-color: #04acec;
+        }
 
-   .custom-menu li:hover {
-       position: absolute;     
-    background-color: #DEF;
-}
-div.animacion {
-    position: absolute;
-    display:inline-block;
-    padding-left:1000px;
-}
-  </style>
- </head>
- <body id="container">
- <ul id="menu">
-     <li>
-        <a href="#">Cubo</a>
-        <ul>
-           <li id="rotate_cubo"><a href="#">Rotaci&oacuten</a></li>
-           <li id="move_cubo"><a href="#">Traslaci&oacuten</a></li>
-           <li>   <input data-toggle="CUBO" class="cambiar_color" type="color" name="color_tablero" value="#FFFF00"></li>
-        </ul>
-    </li>
-    <li>
-        <a href="#">Piramide</a>
-        <ul>
-            <li id="rotate_piramide"><a href="#">Rotaci&oacuten</a></li>
-            <li id="move_piramide"><a href="#">Traslaci&oacuten</a></li>
-            <li>   <input data-toggle="PIRAMIDE" class="cambiar_color" type="color" name="color_tablero" value="#FFFF00"></li>
-        </ul>
-    </li>
-     <li>
-        <a href="#">Toroide</a>
-        <ul>
-            <li id="rotate_toroide"><a href="#">Rotaci&oacuten</a></li>
-            <li id="move_toroide"><a href="#">Traslaci&oacuten</a></li>
-            <li>   <input data-toggle="TOROIDE" class="cambiar_color" type="color" name="color_tablero" value="#FFFF00"></li>
-        </ul>
-    </li>
-     <li>
-        <a href="#">Esfera</a>
-        <ul>
-            <li id="rotate_esfera"><a href="#">Rotaci&oacuten</a></li>
-            <li id="move_esfera"><a href="#">Traslaci&oacuten</a></li>
-            <li>   <input data-toggle="ESFERA" class="cambiar_color" type="color" name="color_tablero" value="#FFFF00"></li>
-        </ul>
-    </li>
-</ul>
-  <div>
-   <button id="cargar_ajedrez">
-    CARGAR AJEDREZ EN TABLERO.
-   </button>   <div>Escoja el color para el piso:</div>
-   <input id="color_picker" type="color" name="color_tablero" value="#FFFF00">
-   <br/>
-   <button id="toggle_luces">
-    APAGAR/PRENDER LUCES
-   </button>
-   <br/>
-   <br/>
-   <button id="toggle_sombras">
-    TOGGLE SOMBRAS
-   </button>
-<br/>
-<!-- <label for="PisoX">Posicion de Camara en X</label>
-     <input name="pisoX" id="pisoX" type="text" value="EMPTY"/>
-     <br/>
-     <label for="PisoY">Posicion de Camara en Y</label>
-     <input name="pisoY" id="pisoY" type="text" value="EMPTY"/>
-     <br/>
-     <label for="PisoZ">Posicion de Camara en Z</label>
-     <input name="pisoZ" id="pisoZ" type="text" value="EMPTY"/>
-     </div> -->
-   <div class="velocidad">
-       <form name="registrationForm">
-   <input type="range" name="velocityInputName" id="velocityInputId" value="10" min="2" max="100" oninput="velocityOutputId.value = velocityInputId.value">
-   <output name="velocityOutputName" id="velocityOutputId">2</output>
-</form>
-</div>
-<script src="bower_components/three.js/build/three.min.js"></script>
-<script src="bower_components/three.js/examples/js/renderers/Projector.js"></script>
-  <script src="bower_components/three.js/examples/js/controls/OrbitControls.js"></script>
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="proyecto.js"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
+        #menu ul li:last-child a {
+            border-radius: 0 0 5px 5px;
+        }
+        /* Clear floated elements */
 
-<ul class='custom-menu'>
-  <li data-action="textura_1">Textura grass</li>
-  <li data-action="textura_2">Textura moon</li>
-  <li data-action="textura_3">Textura crate</li>
-  <li data-action="textura_4">Textura bricks</li>
-</ul>
-   <div class="animacion">
-       <button id="animate">
-    Animate
-   </button>
-       <button id="stop_animate">
-   Stop Animation</button>
-   
+        #menu:after {
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: " ";
+            clear: both;
+            height: 0;
+        }
 
+        * html #menu {
+            zoom: 1;
+        }
+        /* IE6 */
 
-      </div>
- </body>
+        *:first-child+html #menu {
+            zoom: 1;
+        }
+        /* IE7 */
+
+        .custom-menu {
+            display: none;
+            z-index: 1000;
+            position: absolute;
+            overflow: hidden;
+            border: 1px solid #CCC;
+            white-space: nowrap;
+            font-family: sans-serif;
+            background: #FFF;
+            color: #333;
+            border-radius: 5px;
+            padding: 0;
+        }
+        /* Each of the items in the list */
+
+        .custom-menu li {
+            padding: 8px 12px;
+            cursor: pointer;
+            list-style-type: none;
+            transition: all .3s ease;
+        }
+
+        .custom-menu li:hover {
+            position: relative;
+            background-color: #DEF;
+        }
+
+        div.animacion {
+            position: absolute;
+            display: inline-block;
+            padding-left: 1000px;
+        }
+    </style>
+    <script src="bower_components/three.js/build/three.min.js"></script>
+    <script src="bower_components/three.js/examples/js/renderers/Projector.js"></script>
+    <script src="bower_components/three.js/examples/js/controls/OrbitControls.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/dat.gui.js"></script>
+    <script src="proyecto.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
+</head>
+
+<body id="container">
+    <div id="GL"></div>
+    <ul class='custom-menu'>
+        <li data-action="textura_1">Textura grass</li>
+        <li data-action="textura_2">Textura moon</li>
+        <li data-action="textura_3">Textura crate</li>
+        <li data-action="textura_4">Textura bricks</li>
+    </ul>
+</body>
+
 </html>
